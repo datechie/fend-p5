@@ -187,7 +187,7 @@ function yelpInfo (loc, map)
 
 	    apiCall.done (function(response) {
 	      	// Now we create the content to display data in the info window using the results
-	      	console.log("SUCCESS! %o", response); //This is for debugging to look at the returned data
+	      	//console.log("SUCCESS! %o", response); //This is for debugging to look at the returned data
 			contentString =
             	'<div class="infoWindow"><h1 class="infoWindowTitle">' + response.businesses[0].name + '</h1>' +
             	'<h4><strong>Restaurant Details From Yelp:</strong></h4>' +
