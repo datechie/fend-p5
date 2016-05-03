@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Udacity FEND Neighborhood Map Project</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+    	<link rel="stylesheet" href="css/style.css">
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<header>
+		    		<div class="col-xs-12"><h1>My Neigborhood Thai Restaurants</h1></div>
+		    	</header>
+		    </div>
+			<div class="row">
+				<div class="col-sm-3">
+			    	<div class="sidebar-nav">
+			    		<div class="navbar navbar-default" role="navigation">
+					        <div class="navbar-header">
+								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+								<span class="visible-xs navbar-brand">Thai Restaurants</span>
+					        </div>
+					        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+								<ul class="nav navbar-nav">
+					            	<li class="active"><input data-bind="value: searchFilter, valueUpdate: 'afterkeydown'" placeholder="Filter Thai Restaurants" autocomplete="on" id="searchFilter" /></li>
+					            	<li>
+										<ul data-bind="foreach: filterPlaces">
+											<li>
+												<strong  data-bind="text: name, click: $parent.showPlace"></strong>
+											</li>
+										</ul>
+				                	</li>
+								</ul>
+					        </div><!--End of .nav-collapse -->
+						</div>
+		    		</div>
+				</div>
+				<div class="col-sm-9">
+					<div id = "map"></div>
+			  	</div>
+			</div>
+		</div><!--End of container-->
+		<script>
+			function googleError() {
+				alert("Errors encountered with the Google Maps API - please check.");
+			}
+		</script>
+		<script async defer type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCtUBzYy1eB1UMjZqeR9Rn_fH7QSZ6bjNA&callback=initialize" onerror="googleError()"></script>
+		<script type="text/javascript" src="js/myapp.js"></script>
+		<script type="text/javascript" src="js/knockout-3.4.0.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="js/oauth1.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	</body>
+</html>
