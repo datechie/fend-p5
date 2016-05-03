@@ -42,7 +42,7 @@ function ViewModel (){
 			position: {lat:  37.526886, lng: -121.98499375},
 			marker: null
 		},
-	]
+	];
 
 	var map, marker;
   	self.restaurant = ko.observableArray(self.thaiRestaurants);
@@ -75,7 +75,8 @@ function ViewModel (){
 		var pointMarkers = []; //array to show the place Markers on the map
 
 		// Create a marker and set its position.
-		for (var i = 0;i < self.restaurant().length; i++) {
+		var numPlaces = self.restaurant().length;
+		for (var i = 0;i < numPlaces; i++) {
 				var tempRes = self.restaurant()[i]; // Defining a temp variable to get each value and then use it below
 				marker = new google.maps.Marker({
 					map: map,
@@ -107,7 +108,7 @@ function ViewModel (){
             google.maps.event.addListener(marker, 'click', function () {
             	self.showPlace(loc);
             });
-        })
+        });
 
 		// Function to bounce the marker for 2 seconds on click
 		function toggleBounce(marker) {
@@ -120,7 +121,6 @@ function ViewModel (){
 		      }, 2000);
 		  	}
 		}
-
 	}
 
 	// We use a second array for search filtering with the knockout framework
@@ -139,7 +139,7 @@ function ViewModel (){
             }
             return isDisplay;
         });
-    })
+    });
 
 	google.maps.event.addDomListener(window, 'load', initMap);
 }
@@ -174,36 +174,45 @@ function yelpInfo (loc, map)
 
 	var contentString; // This variable will be used with the infoWindow function
 
+	// AJAX call changed based on review comments
 	var settings = {
 	    url: yelp_url,
 	    data: parameters,
 	    cache: true,
 	    dataType: 'jsonp',
-	    jsonpCallback: 'cb',
-	    success: function(data) {
+	    jsonpCallback: 'cb'
+	};
+	// Send AJAX query via jQuery library.
+	var apiCall = $.ajax(settings);
+
+	    apiCall.done (function(response) {
 	      	// Now we create the content to display data in the info window using the results
-	      	// console.log("SUCCCESS! %o", data); /* This is for debugging to look at the returned data */
+	      	console.log("SUCCESS! %o", response); //This is for debugging to look at the returned data
 			contentString =
-            	'<div class="infoWindow"><h1 class="infoWindowTitle">' + data.businesses[0].name + '</h1>' +
+            	'<div class="infoWindow"><h1 class="infoWindowTitle">' + response.businesses[0].name + '</h1>' +
             	'<h4><strong>Restaurant Details From Yelp:</strong></h4>' +
 				'<ul><li><h4>Rating: ' +
-            	'<img src="' + data.businesses[0].rating_img_url + '"</h4></li>' +
-            	'<li><h4> Phone: <br/>' + data.businesses[0].display_phone + '</h4></li>' +
-            	'<li><h4> Address: <br/>' + data.businesses[0].location.display_address.join('<br/>') +
+            	'<img src="' + response.businesses[0].rating_img_url + '"</h4></li>' +
+            	'<li><h4> Phone: <br/>' + response.businesses[0].display_phone + '</h4></li>' +
+            	'<li><h4> Address: <br/>' + response.businesses[0].location.display_address.join('<br/>') +
     			'</h4></li></ul>' +
             	'</div>';
             // We now set the infoWindow content
   			infoLoc.setContent(contentString);
 			infoLoc.open(map, loc.marker);
-	    },
-	    error: function(error) {
-			// On error we will display the error message in the console
-			console.log(error);
-	    }
-	};
+	    });
 
-	// Send AJAX query via jQuery library.
-	$.ajax(settings);
+	    apiCall.fail(function(jqXHR, textStatus) {
+			// On error we will show an alert
+			alert("An error occured with the Yelp API call: " + textStatus);
+			// We will also display the error message in the info window since yelp details are not available
+			contentString =
+            	'<div class="infoWindow"><h1 class="infoWindowTitle"> ERROR</h1>' +
+            	'<h4><strong>There was an error getting Yelp Data: <br/> </strong></h4>' + textStatus +
+            	'</div>';
+  			infoLoc.setContent(contentString);
+			infoLoc.open(map, loc.marker);
+	    });
 
 }
 
