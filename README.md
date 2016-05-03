@@ -2,16 +2,13 @@ Project 5 for the Udacity front-end nanodegree.
 
 This is a map of 5 Thai Restaurants in my neighborhood and shows some details about the selected restaurant from Yelp.
 
-## Installation Instructions
+## Installation/Usage Instructions
 
-* [View the Map on Github]() or
-
-
-* Download or fork the code from [GitHub](https://github.com/)
+* Download or fork the code from [GitHub](https://github.com/datechie/fend-p5)
 * Open the index.html file to start the application
 * Use the filter box on the left side to list and search for Thai restaurants
 * Select a map marker (this is a blue marker in the map) or list item name to display the restaurant ratings, phone number and address.
-* On smaller screens, the list will be hidden and the will switch to a hamburger menu which can be clicked to see the list or search
+* On smaller screens, the list will be hidden and it will switch to a hamburger menu which can be clicked to see the list or search
 
 ## Sites/Tools Used
 
