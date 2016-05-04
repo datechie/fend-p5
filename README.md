@@ -51,3 +51,7 @@ This is a map of 5 Thai Restaurants in my neighborhood and shows some details ab
 * I would also like to call out my fellow Udacity Alum - James Logan who was part of my Udacity team (even after the Udacity teams were disbanded) for encouraging and supporting me while I worked on this project even though he has already graduated.
 * Reviewed lots of Udacity discussions and fellow student discussions on this project and have not been able to list all the references.
 
+### Additional references for $.ajax error handling issue
+* https://discussions.udacity.com/t/trouble-error-handling-with-ajax-call-to-yelp-api/166409/9
+* https://discussions.udacity.com/t/ajax-error-handling-not-working/167068/2
+* http://stackoverflow.com/questions/19035557/jsonp-request-error-handling/19185826#19185826
