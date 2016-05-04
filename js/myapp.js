@@ -82,7 +82,6 @@ function ViewModel (){
 					map: map,
 					position: new google.maps.LatLng(tempRes.position),
 					title: tempRes.name,
-					draggable: true,
 					animation: google.maps.Animation.DROP,
 					icon: 'images/thai.png' // icon gotten from https://mapicons.mapsmarker.com
 				});
@@ -179,40 +178,42 @@ function yelpInfo (loc, map)
 	    url: yelp_url,
 	    data: parameters,
 	    cache: true,
+	    timeout: 5000,
 	    dataType: 'jsonp',
-	    jsonpCallback: 'cb'
+	    callback: 'cb'
 	};
-	// Send AJAX query via jQuery library.
-	var apiCall = $.ajax(settings);
 
-	    apiCall.done (function(response) {
-	      	// Now we create the content to display data in the info window using the results
-	      	//console.log("SUCCESS! %o", response); //This is for debugging to look at the returned data
-			contentString =
-            	'<div class="infoWindow"><h1 class="infoWindowTitle">' + response.businesses[0].name + '</h1>' +
-            	'<h4><strong>Restaurant Details From Yelp:</strong></h4>' +
-				'<ul><li><h4>Rating: ' +
-            	'<img src="' + response.businesses[0].rating_img_url + '"</h4></li>' +
-            	'<li><h4> Phone: <br/>' + response.businesses[0].display_phone + '</h4></li>' +
-            	'<li><h4> Address: <br/>' + response.businesses[0].location.display_address.join('<br/>') +
-    			'</h4></li></ul>' +
-            	'</div>';
-            // We now set the infoWindow content
-  			infoLoc.setContent(contentString);
-			infoLoc.open(map, loc.marker);
-	    });
 
-	    apiCall.fail(function(jqXHR, textStatus) {
-			// On error we will show an alert
-			alert("An error occured with the Yelp API call: " + textStatus);
-			// We will also display the error message in the info window since yelp details are not available
-			contentString =
-            	'<div class="infoWindow"><h1 class="infoWindowTitle"> ERROR</h1>' +
-            	'<h4><strong>There was an error getting Yelp Data: <br/> </strong></h4>' + textStatus +
-            	'</div>';
-  			infoLoc.setContent(contentString);
-			infoLoc.open(map, loc.marker);
-	    });
+	// Switching from .ajax to .jsonp since it provides better error handling
+	//var apiCall = $.ajax(settings);
+	var apiCall = $.jsonp(settings);
+    apiCall.done (function(response) {
+      	// Now we create the content to display data in the info window using the results
+		contentString =
+        	'<div class="infoWindow"><h1 class="infoWindowTitle">' + response.businesses[0].name + '</h1>' +
+        	'<h4><strong>Restaurant Details From Yelp:</strong></h4>' +
+			'<ul><li><h4>Rating: ' +
+        	'<img src="' + response.businesses[0].rating_img_url + '"</h4></li>' +
+        	'<li><h4> Phone: <br/>' + response.businesses[0].display_phone + '</h4></li>' +
+        	'<li><h4> Address: <br/>' + response.businesses[0].location.display_address.join('<br/>') +
+			'</h4></li></ul>' +
+        	'</div>';
+        // We now set the infoWindow content
+		infoLoc.setContent(contentString);
+		infoLoc.open(map, loc.marker);
+    });
+
+    apiCall.fail(function(jqXHR, textStatus, exception) {
+		//alert("An error occured with the Yelp API call: " + textStatus + " exception is " + exception);
+		// We display the error message in the info window since yelp details are not available
+		contentString =
+        	'<div class="infoWindow"><h1 class="infoWindowTitle">ERROR</h1>' +
+        	'<h4>An error occured with the Yelp API call.<br/>The Error Status is ' + textStatus +
+        	' and the exception is ' + exception + '</h4>' +
+        	'</div>';
+		infoLoc.setContent(contentString);
+		infoLoc.open(map, loc.marker);
+    });
 
 }
 

@@ -3,15 +3,15 @@ body {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Arial, san-serif;
-	color: #4D4D4D;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Tahoma, Arial, san-serif;
+	color: #4d4d4d;
 }
 
 header {
     background-color: white;
     color: black;
-    text-align:center;
-    padding:5px;
+    text-align: center;
+    padding: 5px;
 }
 
 /* make sidebar nav vertical */
@@ -20,13 +20,13 @@ header {
         padding: 0;
         max-height: none;
     }
-    .sidebar-nav .navbar ul {
+    .navbar ul {
         float: none;
     }
-    .sidebar-nav .navbar ul:not {
+    .navbar ul:not {
         display: block;
     }
-    .sidebar-nav .navbar li {
+    .navbar li {
         float: none;
         display: block;
     }
@@ -42,7 +42,10 @@ header {
         width: 262px;
     }
 }
-.sidebar-nav .navbar-header{ float: none; }
+.sidebar-nav .navbar-header
+{
+    float: none;
+}
 
 #map {
 	float: right;
@@ -67,7 +70,7 @@ header {
     font-size: 20px;
     font-weight: 400;
     padding: 10px;
-    color: #4D4D4D;
-    margin: 0px;
+    color: #4d4d4d;
+    margin: 0;
     width: 100%;
 }
